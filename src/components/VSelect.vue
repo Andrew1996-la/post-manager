@@ -1,7 +1,9 @@
 <template>
   <select v-model="modalValue" @change="changeFilter" class="select">
-    <option disabled value=""> choose something from list</option>
-    <option v-for="filter in filters" :key="filter" :value="filter">{{ filter }}</option>
+    <option disabled value="">choose something from list</option>
+    <option v-for="filter in filters" :key="filter.value" :value="filter">
+      {{ filter.name }}
+    </option>
   </select>
 </template>
 
@@ -11,11 +13,10 @@ export default {
   props: ["filters", "modalValue"],
   methods: {
     changeFilter(e) {
-      this.$emit('update:modalValue', e.target.value)
-    }
-  }
-}
+      this.$emit("update:modalValue", e.target.value);
+    },
+  },
+};
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

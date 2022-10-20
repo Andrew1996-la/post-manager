@@ -1,8 +1,8 @@
 <template>
   <div class="post_wrapper">
     <div class="post">
-      <div class="post-title"><strong>Title:</strong> {{post.title}}</div>
-      <div class="post-body"><strong>Description:</strong> {{post.body}}</div>
+      <div class="post-title"><strong>Title:</strong> {{ post.title }}</div>
+      <div class="post-body"><strong>Description:</strong> {{ post.body }}</div>
     </div>
     <div class="post_delete">
       <VButton @click="deletePost">Delete this post</VButton>
@@ -15,17 +15,17 @@ import VButton from "@/UI/VButton";
 
 export default {
   name: "PostItem",
-  components: {VButton},
+  components: { VButton },
   emits: ["deletePost"],
   props: {
-    post: Object
+    post: Object,
   },
   methods: {
     deletePost() {
-      this.$emit('deletePost', this.post.id)
-    }
-  }
-}
+      this.$emit("deletePost", this.post.id);
+    },
+  },
+};
 </script>
 
 <style scoped>

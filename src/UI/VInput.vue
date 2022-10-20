@@ -1,19 +1,24 @@
 <template>
-  <input :value="modelValue" @input="updateInput" class="form_input" type="text">
+  <input
+    :value="modelValue"
+    @input="updateInput"
+    class="form_input"
+    type="text"
+  />
 </template>
 
 <script>
 export default {
   name: "VInput",
   props: {
-    modelValue: [String, Number]
+    modelValue: [String, Number],
   },
   methods: {
     updateInput(event) {
-      this.$emit("update:modelValue", event.target.value)
-    }
-  }
-}
+      this.$emit("update:modelValue", event.target.value);
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -23,5 +28,4 @@ export default {
   margin-top: 15px;
   height: 3rem;
 }
-
 </style>

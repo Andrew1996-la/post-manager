@@ -1,9 +1,9 @@
 <template>
   <form class="form_post" @submit.prevent="createPost">
-    <VInput placeholder="Enter title" v-model="post.title"/>
-    <VInput placeholder="Enter description" v-model="post.descr"/>
+    <VInput placeholder="Enter title" v-model="post.title" />
+    <VInput placeholder="Enter description" v-model="post.descr" />
     <VButton class="form_post_btn">Create new post</VButton>
-    <span @click='$emit("close")' class="close">&#10006;</span>
+    <span @click="$emit('close')" class="close">&#10006;</span>
   </form>
 </template>
 
@@ -14,29 +14,28 @@ import VInput from "@/UI/VInput";
 
 export default {
   name: "PostForm",
-  components: {VButton, VInput},
+  components: { VButton, VInput },
 
   data() {
     return {
       post: {
-        title: '',
-        descr: '',
-      }
-    }
+        title: "",
+        descr: "",
+      },
+    };
   },
   methods: {
     createPost() {
-      this.post.id = setId()
-      this.$emit('create', this.post)
+      this.post.id = setId();
+      this.$emit("create", this.post);
       this.post = {
-        title: '',
-        descr: ''
-      }
-      this.$emit('close')
-    }
-  }
-
-}
+        title: "",
+        descr: "",
+      };
+      this.$emit("close");
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -66,6 +65,4 @@ export default {
   right: 15px;
   cursor: pointer;
 }
-
-
 </style>

@@ -1,15 +1,17 @@
 <template>
-<div class="app">
-  <h2>Страница с постами.</h2>
-  <div class="buttons">
-    <VButton class="create-post" @click="toggleModal">Create new post.</VButton>
-    <VSelect :filters="filters" v-model="chooseFilter" />
+  <div class="app">
+    <h2>Страница с постами.</h2>
+    <div class="buttons">
+      <VButton class="create-post" @click="toggleModal"
+        >Create new post.</VButton
+      >
+      <VSelect :filters="filters" v-model="chooseFilter" />
+    </div>
+    <VModal :isShow="isShowModal" @close="toggleModal">
+      <PostForm @close="toggleModal" @create="createPost" />
+    </VModal>
+    <PostList @deletePost="deletePost" :posts="posts" />
   </div>
-  <VModal :isShow="isShowModal" @close="toggleModal">
-    <PostForm @close="toggleModal" @create="createPost"/>
-  </VModal>
-  <PostList @deletePost="deletePost" :posts="posts"/>
-</div>
 </template>
 
 <script>
@@ -26,42 +28,54 @@ export default {
     VButton,
     PostList,
     PostForm,
-    VModal
+    VModal,
   },
   data() {
     return {
       posts: [],
       isShowModal: false,
-      filters: ['По заголовку', 'По содержимому', 'По id'],
-      chooseFilter: ''
-    }
+      filters: [
+        {
+          value: "title",
+          name: "По заголовку",
+        },
+        {
+          value: "name",
+          name: "По содержимому",
+        },
+        {
+          value: "id",
+          name: "По id",
+        },
+      ],
+      chooseFilter: "",
+    };
   },
   methods: {
     createPost(post) {
-      this.posts.push(post)
+      this.posts.push(post);
     },
     deletePost(postId) {
-      this.posts = this.posts.filter(item => {
-        return item.id !== postId
-      })
+      this.posts = this.posts.filter((item) => {
+        return item.id !== postId;
+      });
     },
     toggleModal() {
       this.isShowModal = !this.isShowModal;
     },
     changeFilter(e) {
-      console.log(e)
-    }
+      console.log(e);
+    },
   },
   async mounted() {
-    const posts = await postApi.getPost()
-    this.posts = posts.data
-  }
-
-}
+    const posts = await postApi.getPost();
+    this.posts = posts.data;
+  },
+};
 </script>
 
 <style>
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;

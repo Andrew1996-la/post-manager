@@ -8,8 +8,8 @@
 
 <script>
 export default {
-  name: "VButton"
-}
+  name: "VButton",
+};
 </script>
 
 <style scoped>
