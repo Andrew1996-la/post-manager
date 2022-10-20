@@ -1,30 +1,83 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+<div class="app">
+  <h2>Страница с постами.</h2>
+  <div class="buttons">
+    <VButton class="create-post" @click="toggleModal">Create new post.</VButton>
+    <VSelect :filters="filters" v-model="chooseFilter" />
+  </div>
+  <VModal :isShow="isShowModal" @close="toggleModal">
+    <PostForm @close="toggleModal" @create="createPost"/>
+  </VModal>
+  <PostList @deletePost="deletePost" :posts="posts"/>
+</div>
 </template>
 
+<script>
+import PostForm from "@/components/PostForm";
+import PostList from "@/components/PostList";
+import VButton from "@/UI/VButton";
+import VModal from "@/components/VModal";
+import postApi from "@/api/postApi";
+import VSelect from "@/components/VSelect";
+
+export default {
+  components: {
+    VSelect,
+    VButton,
+    PostList,
+    PostForm,
+    VModal
+  },
+  data() {
+    return {
+      posts: [],
+      isShowModal: false,
+      filters: ['По заголовку', 'По содержимому', 'По id'],
+      chooseFilter: ''
+    }
+  },
+  methods: {
+    createPost(post) {
+      this.posts.push(post)
+    },
+    deletePost(postId) {
+      this.posts = this.posts.filter(item => {
+        return item.id !== postId
+      })
+    },
+    toggleModal() {
+      this.isShowModal = !this.isShowModal;
+    },
+    changeFilter(e) {
+      console.log(e)
+    }
+  },
+  async mounted() {
+    const posts = await postApi.getPost()
+    this.posts = posts.data
+  }
+
+}
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-nav {
-  padding: 30px;
+body {
+  padding: 20px;
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
+.create-post {
+  display: inline-block;
 }
 </style>
