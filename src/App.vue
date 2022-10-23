@@ -2,9 +2,9 @@
   <div class="app">
     <h2>Страница с постами.</h2>
     <div class="buttons">
-      <VButton class="create-post" @click="toggleModal"
-        >Create new post.</VButton
-      >
+      <VButton class="create-post" @click="toggleModal">
+        Create new post.
+      </VButton>
       <VSelect :filters="filters" v-model="chooseFilter" />
     </div>
     <VModal :isShow="isShowModal" @close="toggleModal">
@@ -40,7 +40,7 @@ export default {
           name: "По заголовку",
         },
         {
-          value: "name",
+          value: "body",
           name: "По содержимому",
         },
         {
@@ -63,8 +63,18 @@ export default {
     toggleModal() {
       this.isShowModal = !this.isShowModal;
     },
-    changeFilter(e) {
-      console.log(e);
+  },
+  watch: {
+    chooseFilter(newValue) {
+      if (newValue === "id") {
+        this.posts = this.posts.sort((post1, post2) => {
+          return post1.id - post2.id;
+        });
+        return;
+      }
+      this.posts = this.posts.sort((post1, post2) => {
+        return post1[newValue]?.localeCompare(post2[newValue]);
+      });
     },
   },
   async mounted() {

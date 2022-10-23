@@ -1,7 +1,7 @@
 <template>
   <form class="form_post" @submit.prevent="createPost">
     <VInput placeholder="Enter title" v-model="post.title" />
-    <VInput placeholder="Enter description" v-model="post.descr" />
+    <VInput placeholder="Enter description" v-model="post.body" />
     <VButton class="form_post_btn">Create new post</VButton>
     <span @click="$emit('close')" class="close">&#10006;</span>
   </form>
@@ -20,7 +20,7 @@ export default {
     return {
       post: {
         title: "",
-        descr: "",
+        body: "",
       },
     };
   },
@@ -30,7 +30,7 @@ export default {
       this.$emit("create", this.post);
       this.post = {
         title: "",
-        descr: "",
+        body: "",
       };
       this.$emit("close");
     },

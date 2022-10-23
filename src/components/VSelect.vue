@@ -1,7 +1,7 @@
 <template>
   <select v-model="modalValue" @change="changeFilter" class="select">
     <option disabled value="">choose something from list</option>
-    <option v-for="filter in filters" :key="filter.value" :value="filter">
+    <option v-for="filter in filters" :key="filter.value" :value="filter.value">
       {{ filter.name }}
     </option>
   </select>
