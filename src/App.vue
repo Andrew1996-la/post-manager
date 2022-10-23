@@ -7,10 +7,15 @@
       </VButton>
       <VSelect :filters="filters" v-model="chooseFilter" />
     </div>
+    <VInput
+      class="search-panel"
+      placeholder="Search by title..."
+      v-model="searchPanel"
+    />
     <VModal :isShow="isShowModal" @close="toggleModal">
       <PostForm @close="toggleModal" @create="createPost" />
     </VModal>
-    <PostList @deletePost="deletePost" :posts="posts" />
+    <PostList @deletePost="deletePost" :posts="searchedPost" />
   </div>
 </template>
 
@@ -21,9 +26,11 @@ import VButton from "@/UI/VButton";
 import VModal from "@/components/VModal";
 import postApi from "@/api/postApi";
 import VSelect from "@/components/VSelect";
+import VInput from "@/UI/VInput";
 
 export default {
   components: {
+    VInput,
     VSelect,
     VButton,
     PostList,
@@ -34,6 +41,7 @@ export default {
     return {
       posts: [],
       isShowModal: false,
+      searchPanel: "",
       filters: [
         {
           value: "title",
@@ -77,6 +85,15 @@ export default {
       });
     },
   },
+  computed: {
+    searchedPost() {
+      return [...this.posts].filter((post) => {
+        return post.title
+          .toLowerCase()
+          .includes(this.searchPanel.toLowerCase());
+      });
+    },
+  },
   async mounted() {
     const posts = await postApi.getPost();
     this.posts = posts.data;
@@ -103,5 +120,9 @@ body {
 
 .create-post {
   display: inline-block;
+}
+
+.search-panel {
+  width: 100%;
 }
 </style>
