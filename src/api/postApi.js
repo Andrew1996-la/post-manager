@@ -1,10 +1,13 @@
 import axios from "axios";
 
 class PostApi {
-  getPost() {
-    const posts = axios.get(
-      "https://jsonplaceholder.typicode.com/posts?_limit=10"
-    );
+  getPost(limit, page) {
+    const posts = axios.get(`https://jsonplaceholder.typicode.com/posts`, {
+      params: {
+        _page: page,
+        _limit: limit,
+      },
+    });
     return posts;
   }
 }

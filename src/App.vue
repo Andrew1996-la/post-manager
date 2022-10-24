@@ -16,6 +16,7 @@
       <PostForm @close="toggleModal" @create="createPost" />
     </VModal>
     <PostList @deletePost="deletePost" :posts="searchedPost" />
+    <VPagination :totalPage="totalPage" :page="page" @changePage="changePage" />
   </div>
 </template>
 
@@ -27,6 +28,7 @@ import VModal from "@/components/VModal";
 import postApi from "@/api/postApi";
 import VSelect from "@/components/VSelect";
 import VInput from "@/UI/VInput";
+import VPagination from "@/components/VPagination";
 
 export default {
   components: {
@@ -36,12 +38,16 @@ export default {
     PostList,
     PostForm,
     VModal,
+    VPagination,
   },
   data() {
     return {
       posts: [],
       isShowModal: false,
       searchPanel: "",
+      page: 1,
+      limit: 10,
+      totalPage: 0,
       filters: [
         {
           value: "title",
@@ -60,6 +66,12 @@ export default {
     };
   },
   methods: {
+    changePage(page) {
+      this.page = page;
+      postApi
+        .getPost(this.limit, this.page)
+        .then((response) => (this.posts = response.data));
+    },
     createPost(post) {
       this.posts.push(post);
     },
@@ -95,7 +107,8 @@ export default {
     },
   },
   async mounted() {
-    const posts = await postApi.getPost();
+    const posts = await postApi.getPost(this.limit, this.page);
+    this.totalPage = Math.ceil(posts.headers["x-total-count"] / this.limit);
     this.posts = posts.data;
   },
 };
