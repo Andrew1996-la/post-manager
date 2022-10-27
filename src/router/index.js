@@ -2,6 +2,7 @@ import StartPage from "@/pages/StartPage";
 import PostPage from "@/pages/PostPage";
 import { createRouter, createWebHistory } from "vue-router";
 import AboutApp from "@/pages/AboutApp";
+import NotFound from "@/pages/NotFound";
 
 const routes = [
   {
@@ -15,6 +16,10 @@ const routes = [
   {
     path: "/about",
     component: AboutApp,
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    component: NotFound,
   },
 ];
 
