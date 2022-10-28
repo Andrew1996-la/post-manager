@@ -15,6 +15,7 @@ import PostList from "@/components/PostList";
 export default {
   name: "AboutApp",
   components: { PostList },
+  props: ["post"],
   data() {
     return {
       possibilityApp,

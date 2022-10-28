@@ -4,9 +4,8 @@
       <div class="post-title"><strong>Title:</strong> {{ post.title }}</div>
       <div class="post-body"><strong>Description:</strong> {{ post.body }}</div>
     </div>
-    <div class="post_delete">
-      <VButton @click="deletePost">Delete this post</VButton>
-    </div>
+    <VButton class="post_open" @click="openPost">Open this post</VButton>
+    <VButton class="post_delete" @click="deletePost">Delete this post</VButton>
   </div>
 </template>
 
@@ -18,11 +17,25 @@ export default {
   components: { VButton },
   emits: ["deletePost"],
   props: {
-    post: Object,
+    post: {
+      id: Number,
+      title: String,
+      body: String,
+    },
   },
   methods: {
     deletePost() {
       this.$emit("deletePost", this.post.id);
+    },
+    openPost() {
+      // this.$router.push({ path: `/posts/${this.post.id}` });
+      this.$router.push({
+        name: "postById",
+        params: {
+          title: this.post.title,
+          body: this.post.body,
+        },
+      });
     },
   },
 };
@@ -35,6 +48,7 @@ export default {
 
 .post-body {
   margin-top: 8px;
+  padding-right: 10px;
 }
 
 .post_wrapper {
@@ -50,5 +64,9 @@ export default {
   padding: 5px 12px;
   background-color: unset;
   border: brown 1px solid;
+}
+
+.post_open {
+  margin-right: 8px;
 }
 </style>
