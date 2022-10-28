@@ -1,9 +1,15 @@
 <template>
   <nav class="nav">
     <ul class="nav__list">
-      <li @click="$router.push('/')">Start page</li>
-      <li @click="$router.push('/posts')">Posts</li>
-      <li @click="$router.push('/about')">About</li>
+      <li class="list__item">
+        <router-link to="/" active-class="active">Start page</router-link>
+      </li>
+      <li class="list__item">
+        <router-link to="/posts" active-class="active">Posts</router-link>
+      </li>
+      <li class="list__item">
+        <router-link to="/about" active-class="active">About</router-link>
+      </li>
     </ul>
   </nav>
 </template>
@@ -28,6 +34,7 @@ export default {
   height: 50px;
   cursor: pointer;
   color: white;
+  text-decoration: none;
 }
 
 .nav__list li:hover {
@@ -36,5 +43,15 @@ export default {
 
 .nav__list li {
   margin: 0 15px;
+}
+
+.list__item a {
+  color: white;
+  text-decoration: none;
+}
+
+.list__item .active {
+  padding-bottom: 5px;
+  border-bottom: 2px solid white;
 }
 </style>
