@@ -28,7 +28,6 @@ export default {
       this.$emit("deletePost", this.post.id);
     },
     openPost() {
-      // this.$router.push({ path: `/posts/${this.post.id}` });
       this.$router.push({
         name: "postById",
         params: {
