@@ -12,6 +12,8 @@
 <script>
 import possibilityApp from "@/api/possibilityApp";
 import PostList from "@/components/PostList";
+import { mapState } from "vuex";
+
 export default {
   name: "AboutApp",
   components: { PostList },
@@ -20,6 +22,9 @@ export default {
     return {
       possibilityApp,
     };
+  },
+  methods: {
+    ...mapState(["post"]),
   },
 };
 </script>
