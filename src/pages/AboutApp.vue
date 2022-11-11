@@ -12,19 +12,16 @@
 <script>
 import possibilityApp from "@/api/possibilityApp";
 import PostList from "@/components/PostList";
-import { mapState } from "vuex";
+import VButton from "@/UI/VButton";
 
 export default {
   name: "AboutApp",
-  components: { PostList },
+  components: { VButton, PostList },
   props: ["post"],
   data() {
     return {
       possibilityApp,
     };
-  },
-  methods: {
-    ...mapState(["post"]),
   },
 };
 </script>

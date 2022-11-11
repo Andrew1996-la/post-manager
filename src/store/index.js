@@ -1,13 +1,10 @@
 import { createStore } from "vuex";
-import postStore from "@/store/modules/postStore";
+import posts from "@/store/modules/posts";
 
-const index = createStore({
-  state: () => {
-    justZalupa: "zalupa";
-  },
+const postsStore = createStore({
   modules: {
-    postStore: postStore,
+    posts,
   },
 });
 
-export default index;
+export default postsStore;
